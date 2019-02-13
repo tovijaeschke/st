@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "mono:pixelsize=20:antialias=true:autohint=true";
+static char *font = "Liberation Mono:pixelsize=12:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
@@ -85,44 +85,44 @@ unsigned int tabspaces = 8;
 /* bg opacity */
 unsigned int alpha = 0xCC;
 
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
+	/* 8 normal colors */
+	"black",
+	"red3",
+	"green3",
+	"yellow3",
+	"blue2",
+	"magenta3",
+	"cyan3",
+	"gray90",
 
-  /* 8 normal colors */
-  [0] = "#000000", /* black   */
-  [1] = "#ff0000", /* red     */
-  [2] = "#33ff00", /* green   */
-  [3] = "#ff0099", /* yellow  */
-  [4] = "#0066ff", /* blue    */
-  [5] = "#cc00ff", /* magenta */
-  [6] = "#00ffff", /* cyan    */
-  [7] = "#d0d0d0", /* white   */
+	/* 8 bright colors */
+	"gray50",
+	"red",
+	"green",
+	"yellow",
+	"#5c5cff",
+	"magenta",
+	"cyan",
+	"white",
 
-  /* 8 bright colors */
-  [8]  = "#808080", /* black   */
-  [9]  = "#ff0000", /* red     */
-  [10] = "#33ff00", /* green   */
-  [11] = "#ff0099", /* yellow  */
-  [12] = "#0066ff", /* blue    */
-  [13] = "#cc00ff", /* magenta */
-  [14] = "#00ffff", /* cyan    */
-  [15] = "#ffffff", /* white   */
+	[255] = 0,
 
-  /* special colors */
-  [256] = "#000000", /* background */
-  [257] = "#d0d0d0", /* foreground */
+	/* more colors can be added after 255 to use with DefaultXX */
+	"#cccccc",
+	"#555555",
 };
+
 
 /*
  * Default colors (colorname index)
  * foreground, background, cursor, reverse cursor
  */
-
-unsigned int defaultfg = 257;
-unsigned int defaultbg = 256;
-unsigned int defaultcs = 257;
-unsigned int defaultrcs = 257;
+unsigned int defaultfg = 7;
+unsigned int defaultbg = 0;
+static unsigned int defaultcs = 256;
+static unsigned int defaultrcs = 257;
 
 /*
  * Default shape of cursor
@@ -176,15 +176,13 @@ static Shortcut shortcuts[] = {
 	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
 	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_c,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_v,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_p,           selpaste,       {.i =  0} },
+	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
+	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
+	{ TERMMOD,              XK_Y,           selpaste,       {.i =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
- 	{ MODKEY,		XK_Page_Up,     kscrollup,      {.i = -1} },
- 	{ MODKEY,            	XK_Page_Down,   kscrolldown,    {.i = -1} },
- 	{ MODKEY,		XK_k,     	kscrollup,      {.i =  1} },
- 	{ MODKEY,            	XK_j,   	kscrolldown,    {.i =  1} },
+ 	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+ 	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 };
 
 /*

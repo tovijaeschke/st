@@ -85,7 +85,6 @@ unsigned int tabspaces = 8;
 /* bg opacity */
 unsigned int alpha = 0xCC;
 
-
 /* Terminal colors (16 first used in escape sequence) */
 static const char *colorname[] = {
 
@@ -116,9 +115,8 @@ static const char *colorname[] = {
 
 /*
  * Default colors (colorname index)
- * foreground, background, cursor, reverse cursor
+ * foreground, background, cursor
  */
-
 unsigned int defaultfg = 257;
 unsigned int defaultbg = 256;
 unsigned int defaultcs = 257;
@@ -153,14 +151,15 @@ static unsigned int mousebg = 0;
  */
 static unsigned int defaultattr = 11;
 
+
 /*
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
 static MouseShortcut mshortcuts[] = {
 	/* button               mask            string */
-	{ Button4,              XK_ANY_MOD,     "\031" },
-	{ Button5,              XK_ANY_MOD,     "\005" },
+	{ Button4,              XK_NO_MOD,      "\031" },
+	{ Button5,              XK_NO_MOD,      "\005" },
 };
 
 /* Internal keyboard shortcuts. */
@@ -173,18 +172,33 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ TERMMOD,              XK_Prior,       zoom,           {.f = +1} },
-	{ TERMMOD,              XK_Next,        zoom,           {.f = -1} },
-	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
-	{ TERMMOD,              XK_c,           clipcopy,       {.i =  0} },
-	{ TERMMOD,              XK_v,           clippaste,      {.i =  0} },
-	{ TERMMOD,              XK_p,           selpaste,       {.i =  0} },
-	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
+	{ MODKEY|ShiftMask,     XK_Prior,       zoom,           {.f = +1} },
+	{ MODKEY|ShiftMask,     XK_Next,        zoom,           {.f = -1} },
+	{ MODKEY|ShiftMask,     XK_Home,        zoomreset,      {.f =  0} },
+	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
+	{ MODKEY,               XK_c,           clipcopy,       {.i =  0} },
+	{ MODKEY,               XK_v,           clippaste,      {.i =  0} },
+	{ MODKEY,               XK_p,           selpaste,       {.i =  0} },
 	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
- 	{ MODKEY,		XK_Page_Up,     kscrollup,      {.i = -1} },
- 	{ MODKEY,            	XK_Page_Down,   kscrolldown,    {.i = -1} },
- 	{ MODKEY,		XK_k,     	kscrollup,      {.i =  1} },
- 	{ MODKEY,            	XK_j,   	kscrolldown,    {.i =  1} },
+	/*
+	{ MODKEY,               XK_Control_L,   iso14755,       {.i =  0} },
+	{ ShiftMask,            XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ ShiftMask,            XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,               XK_Page_Up,     kscrollup,      {.i = -1} },
+	{ MODKEY,               XK_Page_Down,   kscrolldown,    {.i = -1} },
+	{ MODKEY,            	XK_k,  		kscrollup,      {.i =  1} },
+	{ MODKEY,            	XK_j,   	kscrolldown,    {.i =  1} },
+	{ MODKEY,            	XK_Up,  	kscrollup,      {.i =  1} },
+	{ MODKEY,            	XK_Down,   	kscrolldown,    {.i =  1} },
+	{ MODKEY,	        XK_u,		kscrollup,      {.i = -1} },
+	{ MODKEY,  		XK_d,		kscrolldown,   	{.i = -1} },
+	*/
+	{ MODKEY|ShiftMask,     XK_Up,          zoom,           {.f = +1} },
+	{ MODKEY|ShiftMask,     XK_Down,        zoom,           {.f = -1} },
+	{ MODKEY|ShiftMask,     XK_K,           zoom,           {.f = +1} },
+	{ MODKEY|ShiftMask,     XK_J,           zoom,           {.f = -1} },
+	{ MODKEY|ShiftMask,     XK_U,           zoom,           {.f = +2} },
+	{ MODKEY|ShiftMask,     XK_D,           zoom,           {.f = -2} },
 };
 
 /*

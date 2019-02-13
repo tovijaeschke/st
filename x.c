@@ -102,7 +102,7 @@ typedef struct {
 	XSetWindowAttributes attrs;
 	int scr;
 	int isfixed; /* is fixed geometry? */
- 	int depth; /* bit depth */
+	int depth; /* bit depth */
 	int l, t; /* left and top offset */
 	int gm; /* geometry mask */
 } XWindow;
@@ -698,7 +698,7 @@ xresize(int col, int row)
 
 	XFreePixmap(xw.dpy, xw.buf);
 	xw.buf = XCreatePixmap(xw.dpy, xw.win, win.w, win.h,
- 			xw.depth);
+			xw.depth);
 	XftDrawChange(xw.draw, xw.buf);
 	xclear(0, 0, win.w, win.h);
 
@@ -759,13 +759,12 @@ xloadcols(void)
 				die("could not allocate color %d\n", i);
 		}
 
- 
- 	/* set alpha value of bg color */
- 	if (USE_ARGB) {
- 		dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE;
- 		dc.col[defaultbg].pixel &= 0x00111111;
- 		dc.col[defaultbg].pixel |= alpha << 24;
- 	}
+	/* set alpha value of bg color */
+	if (USE_ARGB) {
+		dc.col[defaultbg].color.alpha = (0xffff * alpha) / OPAQUE;
+		dc.col[defaultbg].pixel &= 0x00111111;
+		dc.col[defaultbg].pixel |= alpha << 24;
+	}
 	loaded = 1;
 }
 
@@ -791,7 +790,7 @@ void
 xtermclear(int col1, int row1, int col2, int row2)
 {
 	XftDrawRect(xw.draw,
-		&dc.col[IS_SET(MODE_REVERSE) ? defaultfg : defaultbg],
+			&dc.col[IS_SET(MODE_REVERSE) ? defaultfg : defaultbg],
 			borderpx + col1 * win.cw,
 			borderpx + row1 * win.ch,
 			(col2-col1+1) * win.cw,
@@ -1117,6 +1116,7 @@ xinit(int cols, int rows)
 	xloadfonts(usedfont, 0);
 
 	/* colors */
+
 	if (!USE_ARGB)
 		xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
 	else
